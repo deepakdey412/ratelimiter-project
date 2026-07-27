@@ -31,7 +31,7 @@ public class DemoController {
         );
     }
 
-    // Explicit SLIDING_WINDOW strategy (Phase 2): strictly at most 10
+    // Explicit SLIDING_WINDOW strategy: strictly at most 10
     // requests in any trailing 30s window, no boundary-burst allowance.
     @RateLimit(limit = 10, window = "30s", strategy = RateLimitStrategy.SLIDING_WINDOW)
     @GetMapping("/api/ping-strict")
@@ -42,7 +42,7 @@ public class DemoController {
         );
     }
 
-    // Phase 4: Rate limit by authenticated user (if Spring Security is present),
+    // Rate limit by authenticated user (if Spring Security is present),
     // otherwise falls back to IP.
     @RateLimit(limit = 20, window = "1m", scope = RateLimitScope.USER)
     @GetMapping("/api/user-limited")
@@ -53,7 +53,7 @@ public class DemoController {
         );
     }
 
-    // Phase 4: Rate limit by API key from X-API-Key header,
+    //  Rate limit by API key from X-API-Key header,
     // falls back to IP if header is absent.
     @RateLimit(limit = 100, window = "1m", scope = RateLimitScope.API_KEY)
     @GetMapping("/api/key-limited")
