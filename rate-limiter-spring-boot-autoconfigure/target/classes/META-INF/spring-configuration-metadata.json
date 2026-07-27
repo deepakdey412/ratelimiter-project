@@ -1,0 +1,39 @@
+{
+  "groups": [
+    {
+      "name": "ratelimiter",
+      "type": "com.example.ratelimiter.autoconfigure.RateLimiterProperties",
+      "sourceType": "com.example.ratelimiter.autoconfigure.RateLimiterProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ratelimiter.api-key-header",
+      "type": "java.lang.String",
+      "sourceType": "com.example.ratelimiter.autoconfigure.RateLimiterProperties",
+      "defaultValue": "X-API-Key"
+    },
+    {
+      "name": "ratelimiter.default-scope",
+      "type": "com.example.ratelimiter.annotation.RateLimitScope",
+      "sourceType": "com.example.ratelimiter.autoconfigure.RateLimiterProperties",
+      "defaultValue": "ip"
+    },
+    {
+      "name": "ratelimiter.default-strategy",
+      "type": "com.example.ratelimiter.annotation.RateLimitStrategy",
+      "sourceType": "com.example.ratelimiter.autoconfigure.RateLimiterProperties",
+      "defaultValue": "token-bucket"
+    },
+    {
+      "name": "ratelimiter.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.example.ratelimiter.autoconfigure.RateLimiterProperties",
+      "defaultValue": true
+    }
+  ],
+  "hints": [],
+  "ignored": {
+    "properties": []
+  }
+}

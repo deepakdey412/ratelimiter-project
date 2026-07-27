@@ -1,0 +1,3 @@
+com\example\ratelimiter\resolver\IpAddressKeyResolverTest.class
+com\example\ratelimiter\resolver\UserIdKeyResolverTest.class
+com\example\ratelimiter\resolver\ApiKeyHeaderKeyResolverTest.class

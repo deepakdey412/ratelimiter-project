@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example.ratelimiter</groupId>
+        <artifactId>ratelimiter-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>rate-limiter-spring-boot-autoconfigure</artifactId>
+    <name>rate-limiter-spring-boot-autoconfigure</name>
+    <description>
+        Spring wiring for rate-limiter-core: the RateLimitAspect, the
+        GlobalExceptionHandler, RateLimiterProperties, and the
+        RateLimiterAutoConfiguration class that registers all of it via
+        explicit @Bean methods, conditionally.
+    </description>
+
+    <dependencies>
+        <!-- The actual algorithms/annotation/domain types this module wires up. -->
+        <dependency>
+            <groupId>com.example.ratelimiter</groupId>
+            <artifactId>rate-limiter-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- @AutoConfiguration, @ConditionalOnMissingBean, @ConditionalOnProperty,
+             @ConditionalOnWebApplication, @EnableConfigurationProperties all
+             live here. Deliberately just spring-boot-autoconfigure, NOT the
+             full spring-boot-starter - an autoconfigure jar should never drag
+             in an embedded servlet container/logging starter/etc. of its own;
+             it only needs the conditional-configuration machinery itself. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
+        <!-- @Aspect / @Around on RateLimitAspect, plus the AspectJ weaver
+             jar that Spring Boot's own (built-in) AopAutoConfiguration
+             detects on the classpath to enable @EnableAspectJAutoProxy
+             automatically - we don't have to declare that ourselves. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- @RestControllerAdvice/ResponseEntity/HttpStatus for
+             GlobalExceptionHandler, and HttpServletRequest/RequestContextHolder
+             for resolving the client IP in RateLimitAspect. This is a hard
+             (non-optional) dependency because this entire feature is
+             explicitly servlet-stack-only (see Phase 1 scope) - any consumer
+             of this starter is necessarily building a servlet-stack Spring
+             MVC app anyway, so this isn't forcing anything unwanted on them. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Spring Security optional dependency for UserIdKeyResolver.
+             Optional=true means it's not forced on consumers who don't use
+             Spring Security. @ConditionalOnClass in RateLimiterAutoConfiguration
+             guards the UserIdKeyResolver bean registration. -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Generates META-INF/spring-configuration-metadata.json for
+             RateLimiterProperties at OUR build time, which is what gives
+             IDE autocomplete + inline docs for `ratelimiter.*` keys in a
+             consumer's application.yml. optional=true keeps it off the
+             consumer's runtime classpath entirely - it's a build-time-only,
+             annotation-processor tool for us, never needed by them. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- @SpringBootTest / MockMvc-style testing support, test-scoped only. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito for mocking HttpServletRequest in tests -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

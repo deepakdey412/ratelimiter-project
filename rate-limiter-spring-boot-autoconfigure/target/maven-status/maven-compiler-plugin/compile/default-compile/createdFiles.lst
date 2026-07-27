@@ -1,0 +1,10 @@
+com\example\ratelimiter\aspect\RateLimitAspect.class
+com\example\ratelimiter\resolver\UserIdKeyResolver.class
+com\example\ratelimiter\autoconfigure\web\GlobalExceptionHandler.class
+com\example\ratelimiter\resolver\ApiKeyHeaderKeyResolver.class
+com\example\ratelimiter\autoconfigure\RateLimiterAutoConfiguration$1.class
+com\example\ratelimiter\resolver\RateLimitKeyResolverRegistry.class
+com\example\ratelimiter\autoconfigure\RateLimiterAutoConfiguration.class
+com\example\ratelimiter\autoconfigure\RateLimiterProperties.class
+META-INF\spring-configuration-metadata.json
+com\example\ratelimiter\resolver\IpAddressKeyResolver.class

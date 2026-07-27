@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example.ratelimiter</groupId>
+        <artifactId>ratelimiter-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>rate-limiter-demo-app</artifactId>
+    <name>rate-limiter-demo-app</name>
+    <description>
+        Runnable Spring Boot app proving the starter works standalone: it
+        depends ONLY on rate-limiter-spring-boot-starter, never on
+        rate-limiter-core or rate-limiter-spring-boot-autoconfigure directly.
+    </description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- The ONLY rate-limiter-related dependency this app declares.
+             Everything else (core, autoconfigure, spring-boot-starter-aop,
+             spring-boot-starter-web) rides in transitively through this one
+             line - that's the entire point of this module. -->
+        <dependency>
+            <groupId>com.example.ratelimiter</groupId>
+            <artifactId>rate-limiter-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Only the actual runnable app module applies this plugin, to
+                 produce an executable "fat jar" with an embedded server.
+                 Library/starter/autoconfigure modules never apply it -
+                 they're meant to be plain dependency jars, not launchable
+                 on their own. -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

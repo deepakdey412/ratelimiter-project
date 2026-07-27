@@ -1,0 +1,12 @@
+# rate-limiter-spring-boot-starter properties. All shown at their defaults;
+# uncomment to change behavior. See RateLimiterProperties for details.
+#
+# ratelimiter:
+#   enabled: true
+#   default-strategy: TOKEN_BUCKET
+#   default-scope: IP
+#   api-key-header: X-API-Key
+
+spring:
+  application:
+    name: rate-limiter-demo-app

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example.ratelimiter</groupId>
+        <artifactId>ratelimiter-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>rate-limiter-core</artifactId>
+    <name>rate-limiter-core</name>
+    <description>
+        Framework-agnostic rate limiting: the @RateLimit annotation, the
+        RateLimitStrategy enum, the RateLimiterStrategy interface, both
+        algorithm implementations (TokenBucket / SlidingWindowCounter and
+        their Spring-free wrapper classes), and the domain exception.
+        Deliberately has NO Spring dependency at all - not even spring-context -
+        so it could theoretically be reused outside Spring entirely.
+    </description>
+
+    <dependencies>
+        <!-- jakarta.servlet.http.HttpServletRequest for RateLimitKeyResolver.
+             Provided scope: the consuming app will have servlet-api already. -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JUnit 5 for the pure-algorithm unit tests (TokenBucketTest,
+             SlidingWindowCounterTest). Test-scoped only - never leaks onto a
+             consumer's runtime classpath. Version comes from the parent's
+             spring-boot-dependencies BOM import, so it always matches
+             whatever Spring Boot version this whole project targets. -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
